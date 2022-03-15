@@ -23,9 +23,6 @@ class RecordConverterTest {
     final RecordConverter recordConverter = new RecordConverter(topic);
     final SourceRecord sourceRecord = recordConverter.convert(redisMessage);
 
-    System.out.println(sourceRecord.timestamp());
-    System.out.println(Instant.now().toEpochMilli());
-
     assertTrue(sourceRecord.sourcePartition().isEmpty());
     assertTrue(sourceRecord.sourceOffset().isEmpty());
     assertEquals(topic, sourceRecord.topic());
