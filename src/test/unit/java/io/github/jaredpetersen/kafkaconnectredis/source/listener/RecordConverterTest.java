@@ -23,6 +23,9 @@ class RecordConverterTest {
     final RecordConverter recordConverter = new RecordConverter(topic);
     final SourceRecord sourceRecord = recordConverter.convert(redisMessage);
 
+    System.out.println(sourceRecord.timestamp());
+    System.out.println(Instant.now().toEpochMilli());
+
     assertTrue(sourceRecord.sourcePartition().isEmpty());
     assertTrue(sourceRecord.sourceOffset().isEmpty());
     assertEquals(topic, sourceRecord.topic());
@@ -32,6 +35,6 @@ class RecordConverterTest {
     assertEquals(redisMessage.getPattern(), ((Struct) sourceRecord.key()).getString("pattern"));
     assertEquals(Schema.Type.STRUCT, sourceRecord.valueSchema().type());
     assertEquals(redisMessage.getMessage(), ((Struct) sourceRecord.value()).getString("message"));
-    assertTrue(sourceRecord.timestamp() <= Instant.now().getEpochSecond());
+    assertTrue(sourceRecord.timestamp() <= Instant.now().toEpochMilli());
   }
 }
